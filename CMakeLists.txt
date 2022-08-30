@@ -33,25 +33,22 @@ add_executable(${PROJECT_NAME}
 )
 
 # Specifies other files
-qt6_add_resources(${PROJECT_NAME} "Resources"
+qt_add_resources(${PROJECT_NAME} "Resources"
   PREFIX
-  "/Resources"
+  "/"
   FILES
-  Images/kitten.png
-  Shaders/phong.vert
-  Shaders/phong.frag
-  Shaders/texture.vert
-  Shaders/texture.frag
+  Resources/Images/kitten.png
+  Resources/Shaders/phong.vert
+  Resources/Shaders/phong.frag
+  Resources/Shaders/texture.vert
+  Resources/Shaders/texture.frag
 )
 
 # GLEW: this creates its library and allows you to `#include "GL/glew.h"`
 add_library(StaticGLEW STATIC glew/src/glew.c)
 include_directories(${PROJECT_NAME} PRIVATE glew/include)
 
-# GLM: this creates its library and allows you to `#include "glm/..."`
-add_subdirectory(glm)
-
-# Specifies libraries to be linked (Qt components, glew, glm, etc)
+# Specifies libraries to be linked (Qt components, glew, etc)
 target_link_libraries(${PROJECT_NAME} PRIVATE
   Qt::Core
   Qt::Widgets
@@ -59,7 +56,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   Qt::OpenGLWidgets
   Qt::Gui
   StaticGLEW
-  glm
 )
 
 # GLEW: this provides support for Windows (including 64-bit)

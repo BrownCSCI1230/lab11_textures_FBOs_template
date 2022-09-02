@@ -21,15 +21,14 @@ find_package(Qt6 REQUIRED COMPONENTS Gui)
 
 # Specifies .cpp and .h files to be passed to the compiler
 add_executable(${PROJECT_NAME}
-  main.cpp
+  src/main.cpp
+  src/glrenderer.cpp
+  src/mainwindow.cpp
 
-  glrenderer.cpp
-  mainwindow.cpp
-
-  glrenderer.h
-  mainwindow.h
-  CS1230Lib/shaderloader.h
-  examplehelpers.h
+  src/glrenderer.h
+  src/mainwindow.h
+  src/shaderloader.h
+  src/examplehelpers.h
 )
 
 # Specifies other files
@@ -65,6 +64,17 @@ if (WIN32)
     opengl32
     glu32
   )
+endif()
+
+
+# Set this flag to silence warnings on Windows
+if (MSVC OR MSYS OR MINGW)
+  set(CMAKE_CXX_FLAGS "-Wno-volatile")
+endif()
+
+# Set this flag to silence warnings on MacOS
+if (APPLE)
+  set(CMAKE_CXX_FLAGS "-Wno-deprecated-volatile")
 endif()
 
 # Set this flag to silence warnings on Windows

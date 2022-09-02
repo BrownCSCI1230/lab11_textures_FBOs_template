@@ -3,13 +3,8 @@
 #include <QCoreApplication>
 #include <QWindow>
 
-#include "CS1230Lib/shaderloader.h"
+#include "shaderloader.h"
 #include "examplehelpers.h"
-
-
-const GLuint DEFAULT_FRAMEBUFFER = 2;
-
-// Public
 
 GLRenderer::GLRenderer(QWidget *parent)
   : QOpenGLWidget(parent),
@@ -26,7 +21,9 @@ GLRenderer::GLRenderer(QWidget *parent)
 void GLRenderer::cleanup()
 {
   glDeleteProgram(m_texture_shader);
-  glDeleteProgram(m_postprocessing_shader);
+  glDeleteProgram(m_phong_shader);
+  // Task 35: Delete OpenGL memory here
+
   doneCurrent();
 }
 
@@ -35,6 +32,10 @@ void GLRenderer::cleanup()
 void GLRenderer::initializeGL()
 {
   m_devicePixelRatio = this->devicePixelRatio();
+
+  m_defaultFBO = 2;
+  m_fbo_width = size().width() * m_devicePixelRatio;
+  m_fbo_height = size().height() * m_devicePixelRatio;
 
   // GLEW is a library which provides an implementation for the OpenGL API
   // Here, we are setting it up
@@ -57,38 +58,29 @@ void GLRenderer::initializeGL()
   // Prepare filepath
   QString kitten_filepath = QString("Resources/Images/kitten.png");
 
-  // TASK 1: obtain image from filepath
+  // TASK 1: Obtain image from filepath
 
-
-  // TASK 2: format image to fit OpenGL
-
+  // TASK 2: Format image to fit OpenGL
   
-  // TASK 3: generate kitten texture
+  // TASK 3: Generate kitten texture
 
+  // TASK 9: Set the active texture slot to texture slot 0
 
-  // TASK 9: set the active texture slot to texture slot 0
+  // TASK 4: Bind kitten texture
 
+  // TASK 5: Load image into kitten texture
 
-  // TASK 4: bind kitten texture
+  // TASK 6: Set min and mag filters' interpolation mode to linear
 
+  // TASK 7: Unbind kitten texture
 
-  // TASK 5: load image into kitten texture
-
-
-  // TASK 6: set min and mag filters' interpolation mode to linear
-
-
-  // TASK 7: unbind kitten texture
-
-
-  // TASK 10: set the texture.frag uniform for our texture
-
-
-  // TASK 11: fix this "fullscreen" quad's vertex data
-  // TASK 12: play around with different values
-  // TASK 13: add UV coordinates
+  // TASK 10: Set the texture.frag uniform for our texture
+  
+  // TASK 11: Fix this "fullscreen" quad's vertex data
+  // TASK 12: Play around with different values!
+  // TASK 13: Add UV coordinates
   std::vector<GLfloat> fullscreen_quad_data =
-  { //     POSITIONS     //
+  { //     POSITIONS    //
       -0.8f,  0.8f, 0.0f,
       -0.8f, -0.8f, 0.0f,
        0.8f, -0.8f, 0.0f,
@@ -112,62 +104,66 @@ void GLRenderer::initializeGL()
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
 
-  // ================== FBOs Section
+  makeFBO();
+}
 
-  // TASK 19: generate and bind an empty texture, set its min/mag filter interpolation, then unbind
+void GLRenderer::makeFBO(){
+    // TASK 19: generate and bind an empty texture, set its min/mag filter interpolation, then unbind
 
+    // TASK 20: generate and bind a renderbuffer of the right size, set its format, then unbind
 
-  // TASK 20: generate and bind a renderbuffer of the right size, set its format, then unbind
+    // TASK 18: generate and bind an FBO
 
+    // TASK 21: add our texture as a color attachment, and our renderbuffer as a depth+stencil attachment, to our FBO
 
-  // TASK 18: generate and bind an FBO
-
-
-  // TASK 21: add our texture as a color attachment, and our renderbuffer as a depth+stencil attachment, to our FBO
-
-
-  // TASK 22: unbind the FBO
-
+    // TASK 22: unbind the FBO
 
 }
 
 void GLRenderer::paintGL()
 {
-//  // TASK 10: set the active texture slot to texture slot 0, then bind the kitten texture
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    paintTexture(m_kitten_texture);
 
-// Clear screen, use program, bind vertex array, draw vertex array
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glUseProgram(m_texture_shader);
-  glBindVertexArray(m_fullscreen_vao);
-  glDrawArrays(GL_TRIANGLES, 0, 6);
-  glBindVertexArray(0);
-  glUseProgram(0);
+    // TASK 23: Uncomment the following code
+//    // TASK 24: Bind our FBO
+//    // TASK 28: Call glViewport
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    paintExampleGeometry();
 
-  // TASK 23 (uncomment the following code and todos): rendering to our created FBO
+//    // TASK 25: Bind the default framebuffer
 
-//  // TASK 25: bind our FBO
+//    // TASK 28: Clear the color and depth buffers
 
+//    // TASK 26: Clear the color and depth buffers
 
-//  // Draw a sphere to the currently bound framebuffer
-//  paintExampleGeometry();
-
-//  // TASK 24: unbind our FBO
-
-
-//  // TASK 26: set the active texture slot to texture slot 0, then bind the FBO texture
-
-
-//  // TASK 26: clear screen, use program, bind vertex array, draw vertex array
-
+//    // TASK 27: Call paintTexture to draw our FBO color attachment texture | TASK 31: Set bool parameter to true
 
 }
 
-void GLRenderer::resizeGL(int w, int h)
-{
-  m_proj = glm::perspective(45.0, 1.0 * w / h, 0.01, 100.0);
+// Task 31: Update the paintTexture function signature
+void GLRenderer::paintTexture(GLuint texture){
+    glUseProgram(m_texture_shader);
+    // TASK 32: Set your bool uniform on whether or not to filter the texture drawn
+
+    glBindVertexArray(m_fullscreen_vao);
+    // TASK 10: Bind "texture" to slot 0
+
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindVertexArray(0);
+    glUseProgram(0);
 }
 
-// Private
+void GLRenderer::resizeGL(int w, int h){
+    // Task 34: Delete Texture, Renderbuffer, and Framebuffer memory
+
+    // Task 34: Regenerate your FBOs
+
+    m_proj = glm::perspective(glm::radians(45.0), 1.0 * w / h, 0.01, 100.0);
+}
+
+// ============== DO NOT EDIT PAST THIS LINE ==================== //
 
 void GLRenderer::initializeExampleGeometry()
 {
@@ -236,18 +232,18 @@ void GLRenderer::rebuildCameraMatrices(int w, int h)
 
   // Create a new view matrix
   m_view = glm::mat4(1);
-  glm::mat4 rot = glm::rotate(-10 * m_angleX,glm::vec3(0,0,1));
+  glm::mat4 rot = glm::rotate(glm::radians(-10 * m_angleX), glm::vec3(0,0,1));
   glm::vec3 eye = glm::vec3(2,0,0);
   eye = glm::vec3(rot * glm::vec4(eye, 1));
   
-  rot = glm::rotate(-10 * m_angleY,glm::cross(glm::vec3(0,0,1),eye));
+  rot = glm::rotate(glm::radians(-10 * m_angleY), glm::cross(glm::vec3(0,0,1),eye));
   eye = glm::vec3(rot * glm::vec4(eye, 1));
   
   eye = eye * m_zoom;
   
   m_view = glm::lookAt(eye,glm::vec3(0,0,0),glm::vec3(0,0,1));
   
-  m_proj = glm::perspective(45.0, 1.0 * w / h, 0.01,100.0);
+  m_proj = glm::perspective(glm::radians(45.0), 1.0 * w / h, 0.01,100.0);
   
   update();
 }

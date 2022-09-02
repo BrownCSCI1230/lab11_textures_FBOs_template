@@ -21,12 +21,18 @@ protected:
     void resizeGL(int w, int h) override; // Called whenever widget has been resized
 
 private:
+    void makeFBO();
+    // Task 30: Update the paintTexture function signature
+    void paintTexture(GLuint texture);
     void initializeExampleGeometry();
     void paintExampleGeometry();
 
     void rebuildCameraMatrices(int w, int h);
 
     int m_devicePixelRatio;
+    GLuint m_defaultFBO;
+    int m_fbo_width;
+    int m_fbo_height;
 
     GLuint m_texture_shader;
     GLuint m_postprocessing_shader;
@@ -36,16 +42,16 @@ private:
     GLuint m_kitten_texture;
     GLuint m_fbo;
     GLuint m_fbo_texture;
-    GLuint m_rbo;
+    GLuint m_fbo_renderbuffer;
 
     GLuint m_phong_shader;
     std::vector<float> m_sphere_data;
     GLuint m_sphere_vbo;
     GLuint m_sphere_vao;
 
-    glm::mat4 m_model;
-    glm::mat4 m_view;
-    glm::mat4 m_proj;
+    glm::mat4 m_model = glm::mat4(1);
+    glm::mat4 m_view = glm::mat4(1);
+    glm::mat4 m_proj = glm::mat4(1);
     float m_ka;
     float m_kd;
     float m_ks;

@@ -67,13 +67,6 @@ if (WIN32)
   )
 endif()
 
-# GLEW: this provides support for Linux
-if (UNIX AND NOT APPLE)
-  target_link_libraries(${PROJECT_NAME} PRIVATE
-    GLU
-  )
-endif()
-
 # Set this flag to silence warnings on Windows
 if (MSVC OR MSYS OR MINGW)
   set(CMAKE_CXX_FLAGS "-Wno-volatile")

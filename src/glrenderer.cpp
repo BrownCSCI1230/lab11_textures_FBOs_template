@@ -58,27 +58,27 @@ void GLRenderer::initializeGL()
   // Prepare filepath
   QString kitten_filepath = QString("Resources/Images/kitten.png");
 
-  // TASK 1: Obtain image from filepath
+  // Task 1: Obtain image from filepath
 
-  // TASK 2: Format image to fit OpenGL
+  // Task 2: Format image to fit OpenGL
   
-  // TASK 3: Generate kitten texture
+  // Task 3: Generate kitten texture
 
-  // TASK 9: Set the active texture slot to texture slot 0
+  // Task 9: Set the active texture slot to texture slot 0
 
-  // TASK 4: Bind kitten texture
+  // Task 4: Bind kitten texture
 
-  // TASK 5: Load image into kitten texture
+  // Task 5: Load image into kitten texture
 
-  // TASK 6: Set min and mag filters' interpolation mode to linear
+  // Task 6: Set min and mag filters' interpolation mode to linear
 
-  // TASK 7: Unbind kitten texture
+  // Task 7: Unbind kitten texture
 
-  // TASK 10: Set the texture.frag uniform for our texture
+  // Task 10: Set the texture.frag uniform for our texture
   
-  // TASK 11: Fix this "fullscreen" quad's vertex data
-  // TASK 12: Play around with different values!
-  // TASK 13: Add UV coordinates
+  // Task 11: Fix this "fullscreen" quad's vertex data
+  // Task 12: Play around with different values!
+  // Task 13: Add UV coordinates
   std::vector<GLfloat> fullscreen_quad_data =
   { //     POSITIONS    //
       -0.8f,  0.8f, 0.0f,
@@ -96,7 +96,7 @@ void GLRenderer::initializeGL()
   glGenVertexArrays(1, &m_fullscreen_vao);
   glBindVertexArray(m_fullscreen_vao);
 
-  // TASK 14: modify the code below to add a second attribute to the vertex attribute array
+  // Task 14: modify the code below to add a second attribute to the vertex attribute array
   glEnableVertexAttribArray(0);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
 
@@ -108,15 +108,15 @@ void GLRenderer::initializeGL()
 }
 
 void GLRenderer::makeFBO(){
-    // TASK 19: generate and bind an empty texture, set its min/mag filter interpolation, then unbind
+    // Task 19: generate and bind an empty texture, set its min/mag filter interpolation, then unbind
 
-    // TASK 20: generate and bind a renderbuffer of the right size, set its format, then unbind
+    // Task 20: generate and bind a renderbuffer of the right size, set its format, then unbind
 
-    // TASK 18: generate and bind an FBO
+    // Task 18: generate and bind an FBO
 
-    // TASK 21: add our texture as a color attachment, and our renderbuffer as a depth+stencil attachment, to our FBO
+    // Task 21: add our texture as a color attachment, and our renderbuffer as a depth+stencil attachment, to our FBO
 
-    // TASK 22: unbind the FBO
+    // Task 22: unbind the FBO
 
 }
 
@@ -125,29 +125,29 @@ void GLRenderer::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     paintTexture(m_kitten_texture);
 
-    // TASK 23: Uncomment the following code
-//    // TASK 24: Bind our FBO
-//    // TASK 28: Call glViewport
+    // Task 23: Uncomment the following code
+//    // Task 24: Bind our FBO
+//    // Task 28: Call glViewport
 //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //    paintExampleGeometry();
 
-//    // TASK 25: Bind the default framebuffer
+//    // Task 25: Bind the default framebuffer
 
-//    // TASK 28: Clear the color and depth buffers
+//    // Task 28: Clear the color and depth buffers
 
-//    // TASK 26: Clear the color and depth buffers
+//    // Task 26: Clear the color and depth buffers
 
-//    // TASK 27: Call paintTexture to draw our FBO color attachment texture | TASK 31: Set bool parameter to true
+//    // Task 27: Call paintTexture to draw our FBO color attachment texture | Task 31: Set bool parameter to true
 
 }
 
 // Task 31: Update the paintTexture function signature
 void GLRenderer::paintTexture(GLuint texture){
     glUseProgram(m_texture_shader);
-    // TASK 32: Set your bool uniform on whether or not to filter the texture drawn
+    // Task 32: Set your bool uniform on whether or not to filter the texture drawn
 
     glBindVertexArray(m_fullscreen_vao);
-    // TASK 10: Bind "texture" to slot 0
+    // Task 10: Bind "texture" to slot 0
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindTexture(GL_TEXTURE_2D, 0);

@@ -49,8 +49,8 @@ void GLRenderer::initializeGL()
   glEnable(GL_DEPTH_TEST);
   
   // Load shaders
-  m_texture_shader = ShaderLoader::createShaderProgram("Resources/Shaders/texture.vert", "Resources/Shaders/texture.frag");
-  m_phong_shader   = ShaderLoader::createShaderProgram("Resources/Shaders/phong.vert", "Resources/Shaders/phong.frag");
+  m_texture_shader = ShaderLoader::createShaderProgram(":/resources/shaders/texture.vert", ":/resources/shaders/texture.frag");
+  m_phong_shader   = ShaderLoader::createShaderProgram(":/resources/shaders/phong.vert", ":/resources/shaders/phong.frag");
   
   // Prepare example geometry for rendering later
   initializeExampleGeometry();
@@ -108,15 +108,15 @@ void GLRenderer::initializeGL()
 }
 
 void GLRenderer::makeFBO(){
-    // Task 19: generate and bind an empty texture, set its min/mag filter interpolation, then unbind
+    // Task 19: Generate and bind an empty texture, set its min/mag filter interpolation, then unbind
 
-    // Task 20: generate and bind a renderbuffer of the right size, set its format, then unbind
+    // Task 20: Generate and bind a renderbuffer of the right size, set its format, then unbind
 
-    // Task 18: generate and bind an FBO
+    // Task 18: Generate and bind an FBO
 
-    // Task 21: add our texture as a color attachment, and our renderbuffer as a depth+stencil attachment, to our FBO
+    // Task 21: Add our texture as a color attachment, and our renderbuffer as a depth+stencil attachment, to our FBO
 
-    // Task 22: unbind the FBO
+    // Task 22: Unbind the FBO
 
 }
 
@@ -127,7 +127,9 @@ void GLRenderer::paintGL()
 
     // Task 23: Uncomment the following code
 //    // Task 24: Bind our FBO
+
 //    // Task 28: Call glViewport
+
 //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //    paintExampleGeometry();
 
@@ -158,6 +160,8 @@ void GLRenderer::paintTexture(GLuint texture){
 void GLRenderer::resizeGL(int w, int h){
     // Task 34: Delete Texture, Renderbuffer, and Framebuffer memory
 
+    m_fbo_width = w * m_devicePixelRatio;
+    m_fbo_height = h * m_devicePixelRatio;
     // Task 34: Regenerate your FBOs
 
     m_proj = glm::perspective(glm::radians(45.0), 1.0 * w / h, 0.01, 100.0);

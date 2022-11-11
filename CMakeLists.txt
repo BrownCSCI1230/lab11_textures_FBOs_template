@@ -36,11 +36,11 @@ qt_add_resources(${PROJECT_NAME} "Resources"
   PREFIX
   "/"
   FILES
-  Resources/Images/kitten.png
-  Resources/Shaders/phong.vert
-  Resources/Shaders/phong.frag
-  Resources/Shaders/texture.vert
-  Resources/Shaders/texture.frag
+  resources/images/kitten.png
+  resources/shaders/phong.vert
+  resources/shaders/phong.frag
+  resources/shaders/texture.vert
+  resources/shaders/texture.frag
 )
 
 # GLEW: this creates its library and allows you to `#include "GL/glew.h"`

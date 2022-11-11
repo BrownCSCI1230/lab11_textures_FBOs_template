@@ -71,7 +71,7 @@ private:
             std::string log(length, '\0');
             glGetShaderInfoLog(shaderID, length, nullptr, &log[0]);
 
-            glDeleteProgram(shaderID);
+            glDeleteShader(shaderID);
             throw std::runtime_error(log);
         }
 

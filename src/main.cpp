@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 
   // Call cleanup function; we do not use destructors (see: rule of 3/5/0)
   int returnValue = a.exec();
-  mainWindow.cleanup();
+  mainWindow.finish();
 
   return returnValue;
 }

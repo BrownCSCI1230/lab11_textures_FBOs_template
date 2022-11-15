@@ -10,7 +10,7 @@ class MainWindow : public QWidget
 
   public:
     MainWindow();
-    void cleanup();
+    void finish();
 
   private:
     GLRenderer *glRenderer;

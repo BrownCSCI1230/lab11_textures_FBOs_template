@@ -13,7 +13,7 @@ class GLRenderer : public QOpenGLWidget
 public:
     GLRenderer(QWidget *parent = nullptr);
 
-    void cleanup();
+    void finish();
 
 protected:
     void initializeGL()         override; // Called once before the first call to paintGL() or resizeGL()
@@ -35,7 +35,6 @@ private:
     int m_fbo_height;
 
     GLuint m_texture_shader;
-    GLuint m_postprocessing_shader;
     GLuint m_fullscreen_vbo;
     GLuint m_fullscreen_vao;
     QImage m_image;

@@ -18,10 +18,15 @@ GLRenderer::GLRenderer(QWidget *parent)
   rebuildCameraMatrices(this->width(), this->height());
 }
 
-void GLRenderer::cleanup()
+void GLRenderer::finish()
 {
   glDeleteProgram(m_texture_shader);
   glDeleteProgram(m_phong_shader);
+  glDeleteVertexArrays(1, &m_sphere_vao);
+  glDeleteBuffers(1, &m_sphere_vbo);
+  glDeleteVertexArrays(1, &m_fullscreen_vao);
+  glDeleteBuffers(1, &m_fullscreen_vbo);
+
   // Task 35: Delete OpenGL memory here
 
   doneCurrent();
@@ -33,7 +38,7 @@ void GLRenderer::initializeGL()
 {
   m_devicePixelRatio = this->devicePixelRatio();
 
-  m_defaultFBO = 2;
+  m_defaultFBO = 0;
   m_fbo_width = size().width() * m_devicePixelRatio;
   m_fbo_height = size().height() * m_devicePixelRatio;
 
@@ -56,7 +61,7 @@ void GLRenderer::initializeGL()
   initializeExampleGeometry();
 
   // Prepare filepath
-  QString kitten_filepath = QString("Resources/Images/kitten.png");
+  QString kitten_filepath = QString(":/resources/images/kitten.png");
 
   // Task 1: Obtain image from filepath
 
@@ -134,8 +139,6 @@ void GLRenderer::paintGL()
 //    paintExampleGeometry();
 
 //    // Task 25: Bind the default framebuffer
-
-//    // Task 28: Clear the color and depth buffers
 
 //    // Task 26: Clear the color and depth buffers
 

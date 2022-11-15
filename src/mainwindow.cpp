@@ -14,9 +14,9 @@ MainWindow::MainWindow()
   this->setLayout(container);
 }
 
-void MainWindow::cleanup()
+void MainWindow::finish()
 {
-  glRenderer->cleanup();
+  glRenderer->finish();
 }
 
 

@@ -51,6 +51,7 @@ void GLRenderer::initializeGL()
   
   // Set some default values for the OpenGL context
   glClearColor(0, 0, 0, 1);
+  glEnable(GL_CULL_FACE);
   glEnable(GL_DEPTH_TEST);
   
   // Load shaders

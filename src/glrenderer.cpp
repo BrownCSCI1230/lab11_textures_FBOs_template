@@ -208,8 +208,6 @@ void GLRenderer::initializeExampleGeometry()
 void GLRenderer::paintExampleGeometry()
 {
   // Paint the geometry for a sphere
-
-  glClearColor(0, 0, 0, 1);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   glUseProgram(m_phong_shader);

@@ -33,6 +33,8 @@ private:
     GLuint m_defaultFBO;
     int m_fbo_width;
     int m_fbo_height;
+    int m_screen_width;
+    int m_screen_height;
 
     GLuint m_texture_shader;
     GLuint m_fullscreen_vbo;

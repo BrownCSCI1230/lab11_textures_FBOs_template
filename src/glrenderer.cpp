@@ -39,10 +39,10 @@ void GLRenderer::initializeGL()
   m_devicePixelRatio = this->devicePixelRatio();
 
   m_defaultFBO = 0;
-  m_fbo_width = size().width() * m_devicePixelRatio;
-  m_fbo_height = size().height() * m_devicePixelRatio;
-  m_screen_width = m_fbo_width;
-  m_screen_height = m_fbo_height;
+  m_screen_width = size().width() * m_devicePixelRatio;
+  m_screen_height = size().height() * m_devicePixelRatio;
+  m_fbo_width = m_screen_width;
+  m_fbo_height = m_screen_height;
 
   // GLEW is a library which provides an implementation for the OpenGL API
   // Here, we are setting it up
@@ -166,10 +166,10 @@ void GLRenderer::paintTexture(GLuint texture){
 void GLRenderer::resizeGL(int w, int h){
     // Task 34: Delete Texture, Renderbuffer, and Framebuffer memory
 
-    m_fbo_width = w * m_devicePixelRatio;
-    m_fbo_height = h * m_devicePixelRatio;
-    m_screen_width = m_fbo_width;
-    m_screen_height = m_fbo_height;
+    m_screen_width = size().width() * m_devicePixelRatio;
+    m_screen_height = size().height() * m_devicePixelRatio;
+    m_fbo_width = m_screen_width;
+    m_fbo_height = m_screen_height;
     // Task 34: Regenerate your FBOs
 
     m_proj = glm::perspective(glm::radians(45.0), 1.0 * w / h, 0.01, 100.0);

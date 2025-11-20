@@ -29,7 +29,7 @@ private:
 
     void rebuildCameraMatrices(int w, int h);
 
-    int m_devicePixelRatio;
+    float m_devicePixelRatio;
     GLuint m_defaultFBO;
     int m_fbo_width;
     int m_fbo_height;
